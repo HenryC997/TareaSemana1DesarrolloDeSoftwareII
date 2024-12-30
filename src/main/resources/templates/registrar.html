@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+	<h1>CENTRO MÉDICO </h1>
+    <h1>Formulario de Registro</h1>
+    <form th:action="@{/registrar}" method="post" th:object="${persona}">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" required pattern="[A-Za-z\s]+" 
+                   title="Solo letras permitidas.">
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required title="Introduce un correo válido.">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" th:field="*{password}" required minlength="8" 
+                   title="Debe tener al menos 8 caracteres.">
+        </div>
+        <div>
+            <label>Genero:</label>
+            <input type="radio" th:field="*{genero}" value="Masculino" required>Masculino
+            <input type="radio" th:field="*{genero}" value="Femenino">Femenino
+        </div>
+        <div>
+            <label for="domicilio">Domicilio:</label>
+            <textarea id="domicilio" rows="5" th:field="*{domicilio}" required 
+                      title="Introduce tu domicilio."></textarea>
+        </div>
+        <div>
+            <label>Matrimonio:</label>
+            <input type="checkbox" th:field="*{matrimonio}">
+        </div>
+        <div>
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" th:field="*{fechaNacimiento}" required>
+        </div>
+        <div>
+            <label for="profesion">Profesiones:</label>
+            <select id="profesion" th:field="*{profesion}" required>
+                <option value="" disabled selected>Selecciona una profesión</option>
+                <option th:each="p : ${profesion}" th:value="${p}" th:text="${p}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="ingreso">Ingreso anual:</label>
+            <input type="number" id="ingreso" th:field="*{ingreso}" required min="0" 
+                   title="Debe ser un número positivo.">
+        </div>
+        <div>
+            <button type="submit">Registrar</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
